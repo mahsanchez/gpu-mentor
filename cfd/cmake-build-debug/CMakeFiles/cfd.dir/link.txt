@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/cc -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/cfd.dir/cfd.c.o CMakeFiles/cfd.dir/jacobi.c.o CMakeFiles/cfd.dir/cfdio.c.o CMakeFiles/cfd.dir/boundary.c.o CMakeFiles/cfd.dir/arraymalloc.c.o -o cfd 

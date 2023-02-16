@@ -1,0 +1,75 @@
+
+ Complete. Execution time is = 12.630973 seconds
+
+!cd ../source_code && make clean && make
+
+rm -f *.o miniWeather
+pgc++ -O3 -w -ta=tesla:managed -Minfo=accel  -o miniWeather miniWeather_openacc.cpp -I/opt/nvidia/hpc_sdk/Linux_x86_64/20.9/cuda/11.0/include -lnetcdf -ldl
+main:
+    167, Generating copyin(hy_pressure_int[:nz+1],state[:((nz+4)*(nx+4))*4],tend[:(nz*nx)*4],state_tmp[:((nz+4)*(nx+4))*4],hy_dens_cell[:nz+4],hy_dens_theta_cell[:nz+4],flux[:((nz+1)*(nx+1))*4]) [if not already present]
+    196, Generating update self(state[:((nz+4)*(nx+4))*4])
+semi_discrete_step(double *, double *, double *, double, int, double *, double *):
+    282, Generating present(state_init[:((nz+4)*(nx+4))*4],state_out[:((nz+4)*(nx+4))*4],tend[:(nz*nx)*4])
+         Generating Tesla code
+        282, #pragma acc loop gang, vector(32) collapse(2) /* blockIdx.x threadIdx.x */
+        284,   /* blockIdx.x threadIdx.x collapsed */
+compute_tendencies_x(double *, double *, double *):
+    311, Generating present(hy_dens_theta_cell[:nz+4],state[:((nz+4)*(nx+4))*4],flux[:((nz+1)*(nx+1))*4])
+         Generating Tesla code
+        311, #pragma acc loop gang collapse(2) /* blockIdx.x */
+        313,   /* blockIdx.x collapsed */
+        316, #pragma acc loop seq
+        318, #pragma acc loop vector(32) /* threadIdx.x */
+    311, CUDA shared memory used for d3_vals,stencil,vals
+         Generating implicit copyin(hy_dens_cell[2:nz]) [if not already present]
+    316, Loop carried reuse of stencil prevents parallelization
+    318, Loop is parallelizable
+    353, Generating present(tend[:(nz*nx)*4],flux[:((nz+1)*(nx+1))*4])
+         Generating Tesla code
+        353, #pragma acc loop gang, vector(32) collapse(2) /* blockIdx.x threadIdx.x */
+        355,   /* blockIdx.x threadIdx.x collapsed */
+compute_tendencies_z(double *, double *, double *):
+    383, Generating present(hy_pressure_int[:nz+1],state[:((nz+4)*(nx+4))*4],flux[:((nz+1)*(nx+1))*4])
+         Generating Tesla code
+        383, #pragma acc loop gang, vector(32) collapse(2) /* blockIdx.x threadIdx.x */
+        385,   /* blockIdx.x threadIdx.x collapsed */
+        388, #pragma acc loop seq
+        390, #pragma acc loop seq
+    383, Local memory used for d3_vals,stencil,vals
+         Generating implicit copyin(hy_dens_theta_int[:nz+1],hy_dens_int[:nz+1]) [if not already present]
+    388, Loop carried reuse of stencil prevents parallelization
+         Complex loop carried dependence of vals,stencil,state->,d3_vals prevents parallelization
+    390, Complex loop carried dependence of state->,stencil prevents parallelization
+    425, Generating present(flux[:((nz+1)*(nx+1))*4],tend[:(nz*nx)*4],state[:((nz+4)*(nx+4))*4])
+         Generating Tesla code
+        425, #pragma acc loop gang, vector(32) collapse(2) /* blockIdx.x threadIdx.x */
+        427,   /* blockIdx.x threadIdx.x collapsed */
+set_halo_values_x(double *):
+    452, Generating present(state[:((nz+4)*(nx+4))*4])
+         Generating Tesla code
+        452, #pragma acc loop gang, vector(32) /* blockIdx.x threadIdx.x */
+    466, Generating present(state[:((nz+4)*(nx+4))*4],hy_dens_theta_cell[:nz+4],hy_dens_cell[:nz+4])
+         Generating Tesla code
+        466, #pragma acc loop gang, vector(32) collapse(2) /* blockIdx.x threadIdx.x */
+        468,   /* blockIdx.x threadIdx.x collapsed */
+set_halo_values_z(double *):
+    498, Generating present(state[:((nz+4)*(nx+4))*4])
+         Generating Tesla code
+        498, #pragma acc loop gang, vector(32) /* blockIdx.x threadIdx.x */
+std::abs(double):
+      1, include "iostream"
+          35, include "iostream"
+                4, include "ostream"
+                    38, include "ios"
+                         42, include "ios_base.h"
+                              41, include "locale_classes.h"
+                                   40, include "string"
+                                        55, include "basic_string.h"
+                                           6493, include "string_conversions.h"
+                                                  41, include "cstdlib"
+                                                       13, include "cstdlib"
+                                                            77, include "std_abs.h"
+                                                                 72, Generating implicit acc routine seq
+                                                                     Generating acc routine seq
+                                                                     Generating Tesla code
+

@@ -1,0 +1,1 @@
+/Library/Developer/CommandLineTools/usr/bin/c++ -g -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX10.14.sdk -Wl,-search_paths_first -Wl,-headerpad_max_install_names CMakeFiles/miniWeather.dir/miniweather_openacc.cpp.o CMakeFiles/miniWeather.dir/miniWeather_serial.cpp.o CMakeFiles/miniWeather.dir/pair_gpu.cpp.o -o miniWeather 

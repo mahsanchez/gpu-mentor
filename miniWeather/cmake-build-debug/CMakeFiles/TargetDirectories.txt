@@ -1,0 +1,3 @@
+/Users/bluefish/CLionProjects/miniWeather/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/Users/bluefish/CLionProjects/miniWeather/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/bluefish/CLionProjects/miniWeather/cmake-build-debug/CMakeFiles/miniWeather.dir
